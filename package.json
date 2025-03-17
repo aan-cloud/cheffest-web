@@ -1,0 +1,30 @@
+{
+  "name": "cheffest-backend",
+  "scripts": {
+    "dev": "bun run --hot src/index.tsx",
+    "start": "bun run src/index.tsx",
+    "generate": "prisma generate",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:studio": "bunx prisma studio",
+    "db:seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "bunx tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@hono/swagger-ui": "^0.4.1",
+    "@hono/zod-openapi": "^0.16.4",
+    "@hono/zod-validator": "^0.4.2",
+    "@prisma/client": "^6.5.0",
+    "@scalar/hono-api-reference": "^0.5.165",
+    "googleapis": "^146.0.0",
+    "hono": "^4.7.4",
+    "oslo": "^1.2.1",
+    "prisma": "^6.5.0",
+    "z": "^1.0.9"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

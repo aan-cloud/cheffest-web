@@ -1,87 +1,119 @@
-# Welcome to React Router!
+# Cheffest Frontend Documentation
 
-A modern, production-ready template for building full-stack React applications using React Router.
+## Overview
+Cheffest Frontend is a web application built with React and TailwindCSS. It provides a seamless user experience for browsing food items, adding them to the cart, and managing orders.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## Tech Stack
+- **Framework:** React (Vite)
+- **UI Library:** TailwindCSS
+- **State Management:** React Context (if applicable)
+- **Routing:** React Router v7
+- **Animations:** Framer Motion (if used)
+- **API Communication:** Fetch API with JWT authentication
+- **Notifications:** React-toastify
+
+## Project Structure
+```
+cheffest-frontend/
+│── src/
+│   ├── components/        # Reusable UI components
+│   ├── pages/             # Page components for routing
+│   ├── hooks/             # Custom hooks
+│   ├── context/           # Context providers
+│   ├── utils/             # Utility functions
+│   ├── assets/            # Images and static assets
+│   ├── App.tsx            # Main application file
+│   ├── main.tsx           # Entry point
+│   ├── routes.tsx         # React Router configuration
+│── public/                # Static files
+│── package.json           # Dependencies and scripts
+│── tailwind.config.js     # TailwindCSS configuration
+│── vite.config.ts         # Vite configuration
+```
+
+## Installation & Setup
+### Prerequisites
+- Node.js (Latest LTS recommended)
+- npm or yarn
+
+### Steps to Run Locally
+```sh
+git clone https://github.com/your-repo/cheffest-frontend.git
+cd cheffest-frontend
+npm install  # or yarn install
+npm run dev  # or yarn dev
+```
+The app will be available at `http://localhost:5173/` (default Vite port).
 
 ## Features
+### 1. Authentication
+- JWT-based authentication.
+- Users can log in and maintain session via cookies.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+### 2. Product Listing
+- Fetches food items from the API.
+- Displays name, price, description, and image.
 
-## Getting Started
+### 3. Cart Management
+- Users can add food to the cart.
+- `addFoodToCart` function sends a POST request to the API:
+  ```ts
+  async function addFoodToCart(product: Food) {
+      const token = document.cookie
+        ?.split('; ')
+        .find((row) => row.startsWith('jwt='))
+        ?.split('=')[1];
+    
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/cart/${product.id}`, {
+          method: "POST",
+          headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ sum: 1 })
+      });
+      
+      if (!res.ok) {
+          throw new Error(`Error: ${res.statusText}`);
+      }
+      
+      const data: FoodToCart = await res.json();
+      toast(`${data.productName} added to cart.`);
+  }
+  ```
+- The cart updates after successful API response.
 
-### Installation
+### 4. Navigation
+- Uses `NavLink` from React Router v7 to maintain active styles:
+  ```tsx
+  <NavLink to="/cart" className={({ isActive }) => isActive ? "text-blue-500 font-bold" : "text-gray-300"}>
+      Cart
+  </NavLink>
+  ```
 
-Install the dependencies:
+### 5. Animations
+- Components fade in when entering the viewport using Framer Motion:
+  ```tsx
+  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+      <ProductCard product={product} />
+  </motion.div>
+  ```
 
-```bash
-npm install
+## Environment Variables
+Create a `.env` file in the root directory and add:
 ```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
+VITE_API_URL=https://your-api-url.com
 ```
 
 ## Deployment
+- Hosted on **Vercel** (or any other platform).
+- Use `npm run build` to create a production-ready build.
 
-### Docker Deployment
+## Troubleshooting
+- **Animation not triggering?** Ensure Framer Motion is installed and correctly wrapped.
+- **API requests failing?** Check `VITE_API_URL` in `.env` and browser console errors.
+- **JWT authentication not working?** Ensure the token is stored and sent correctly.
 
-To build and run using Docker:
+## License
+MIT License
 
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.

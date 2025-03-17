@@ -39,7 +39,7 @@ export function Navigation() {
                 throw new Error("Credential not recieved!")
             }
 
-            const res = await fetch("http://localhost:3000/auth/google/token", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/google/token`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token: credentialResponse.credential }),
@@ -75,7 +75,7 @@ export function Navigation() {
     
                 console.log(token, "from checkuserdata")
     
-                const res = await fetch("http://localhost:3000/auth/me", {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}auth/me`, {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`,

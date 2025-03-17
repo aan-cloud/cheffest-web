@@ -55,7 +55,7 @@ export function About () {
                   
                   <motion.img 
                     className="w-1/2 h-80" 
-                    src="/app/assets/Video.svg" 
+                    src="https://ucarecdn.com/59db88b9-002a-4e72-be70-0977c24abb56/Video.svg" 
                     alt="Video mockup"
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}

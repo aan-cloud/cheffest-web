@@ -113,7 +113,7 @@ export function Navigation() {
     return (
         <nav className="p-4 md:px-24 flex justify-between items-center bg-black">
             <Link to={"/"} id="logo">
-                <img src="/app/assets/Logo.svg" alt="Cheffest Logo" className="w-14"/>
+                <img src="https://ucarecdn.com/ae03f850-4195-44d8-9137-921139adbbd6/Logo.svg" alt="Cheffest Logo" className="w-14"/>
             </Link>
             <ol className="flex justify-between items-center gap-5">
                 <Link to={"/about"} className={`${isActive("/about")}`}>About</Link>
